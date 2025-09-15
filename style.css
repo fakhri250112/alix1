@@ -1,0 +1,137 @@
+:root {
+  --green: #3E9946;
+  --dark: #1a1a1a;
+  --light: #ffffff;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--light);
+  padding: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 55px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: var(--dark);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--green);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  height: 90vh;
+  background: url("assets/hero.jpg") center/cover no-repeat;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(62, 153, 70, 0.6); /* hijau transparan */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.buttons .btn {
+  background: white;
+  color: #3E9946;
+  padding: 12px 24px;
+  border-radius: 10px;
+  margin: 0 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.buttons .btn:hover {
+  background: #f3f3f3;
+}
+
+.buttons .btn-outline {
+  border: 2px solid white;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  margin: 0 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.buttons .btn-outline:hover {
+  background: white;
+  color: #3E9946;
+}
+
+/* Intro */
+.intro {
+  background: var(--light);
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.intro h2 {
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+
+.intro p {
+  max-width: 700px;
+  margin: 0 auto;
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* Footer */
+footer {
+  background: var(--green);
+  color: var(--light);
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSIS-MPK SMP ISLAM AL-IKHLAS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* === Logo Styling === */
+    .logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f0fdf4, #dcfce7);
+      color: #064e3b;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #fff;
+      padding: 15px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #065f46;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #065f46;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #10b981;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #10b981;
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 80vh;
+      background: 
+        linear-gradient(rgba(62, 153, 70, 0.85), rgba(62, 153, 70, 0.85)),
+        url("assets/hero.jpg") center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 0 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Fallback jika gambar tidak ditemukan */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #3E9946, #2d7742);
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease-in-out;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+    }
+
+    .hero h1 .line1 {
+      display: block;
+      font-size: 2.8rem;
+      margin-bottom: 5px;
+    }
+
+    .hero h1 .line2 {
+      display: block;
+      font-size: 3.2rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      margin: 25px 0;
+      animation: fadeInUp 1.2s ease-in-out;
+      max-width: 700px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: white;
+      color: #3E9946;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s;
+      animation: fadeInUp 1.4s ease-in-out;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 10px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      background-color: #f0fdf4;
+    }
+
+    /* Welcome section */
+    .welcome {
+      padding: 80px 20px;
+      text-align: center;
+      background-color: white;
+      margin: 50px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .welcome h2 {
+      color: #3E9946;
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .welcome h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #3E9946, #10b981);
+      border-radius: 2px;
+    }
+
+    .welcome p {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #065f46;
+    }
+
+    /* Features Section */
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 50px 20px;
+      flex-wrap: wrap;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      width: 280px;
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: #3E9946;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      color: #065f46;
+      margin-bottom: 15px;
+    }
+
+    .feature-card p {
+      color: #047857;
+    }
+
+    footer {
+      background: linear-gradient(to right, #3E9946, #065f46);
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 80px;
+    }
+
+    .social-icons {
+      margin-bottom: 20px;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 1.5rem;
+      margin: 0 15px;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #dcfce7;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .logos {
+        justify-content: center;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .hero h1 .line1 {
+        font-size: 2rem;
+      }
+      
+      .hero h1 .line2 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .welcome {
+        margin: 30px 15px;
+        padding: 40px 20px;
+      }
+
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo-container">
+      <!-- Tambahan 3 logo -->
+      <div class="logos">
+        <img src="assets/logo.png" alt="Logo OSIS" class="logo-img">
+        <img src="assets/logo2.png" alt="Logo Sekolah" class="logo-img">
+        <img src="assets/logo3.png" alt="Logo MPK" class="logo-img">
+      </div>
+      <div class="logo-text">OSIS-MPK SMP ISLAM AL-IKHLAS</div>
+    </div>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="tentang.html">Tentang Kami</a>
+      <a href="program.html">Program</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>
+        <span class="line1">SMP ISLAM AL-IKHLAS</span>
+        <span class="line2">MPK-OSIS</span>
+      </h1>
+      <p>Bersama kita wujudkan lingkungan sekolah yang aktif, inovatif, kreatif, dan islami.</p>
+      <a href="#tentang" class="cta-button">Jelajahi Sekarang</a>
+    </div>
+  </section>
+
+  <section class="welcome">
+    <h2>Selamat Datang</h2>
+    <p>
+      Website resmi OSIS & MPK SMP Islam Al Ikhlas. Kami hadir sebagai wadah aspirasi, kreativitas,
+      serta pengembangan diri siswa untuk menciptakan suasana sekolah yang harmonis, penuh semangat,
+      dan berlandaskan nilai islami.
+    </p>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-users"></i>
+      </div>
+      <h3>Organisasi Siswa</h3>
+      <p>Wadah pengembangan diri dan kepemimpinan bagi seluruh siswa</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-lightbulb"></i>
+      </div>
+      <h3>Inovatif</h3>
+      <p>Mendorong terciptanya ide-ide baru yang bermanfaat bagi sekolah</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fas fa-heart"></i>
+      </div>
+      <h3>Nilai Islami</h3>
+      <p>Seluruh kegiatan dilandasi oleh nilai-nilai keislaman</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p>© 2025 OSIS & MPK SMP Islam Al Ikhlas. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Script untuk memeriksa apakah gambar hero.jpg dapat dimuat
+    window.addEventListener('load', function() {
+      const img = new Image();
+      
+      // Path yang benar berdasarkan file Anda
+      const correctPath = 'assets/hero.jpg';
+      
+      img.src = correctPath;
+      
+      img.onload = function() {
+        console.log('Gambar hero.jpg berhasil dimuat dari: ' + correctPath);
+      };
+      
+      img.onerror = function() {
+        console.error('Gambar hero.jpg tidak dapat dimuat dari: ' + correctPath);
+        
+        // Coba path alternatif
+        const alternativePaths = [
+          './assets/hero.jpg',
+          'hero.jpg',
+          'assets/hero.png',
+          './assets/hero.png',
+          'hero.png'
+        ];
+        
+        let alternativeFound = false;
+        
+        alternativePaths.forEach(path => {
+          const testImg = new Image();
+          testImg.src = path;
+          testImg.onload = function() {
+            if (!alternativeFound) {
+              console.log('Gambar ditemukan di path alternatif: ' + path);
+              document.querySelector('.hero').style.background = 
+                `linear-gradient(rgba(62, 153, 70, 0.85), rgba(62, 153, 70, 0.85)), url("${path}") center/cover no-repeat`;
+              alternativeFound = true;
+            }
+          };
+        });
+      };
+    });
+  </script>
+</body>
+
+</html>
