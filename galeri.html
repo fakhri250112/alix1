@@ -1,457 +1,120 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeri - OSIS & MPK SMP Islam Al Ikhlas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<!-- Tambahkan style untuk galeri -->
+<style>
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 40px 0;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  height: 250px;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 20px;
+  transform: translateY(100%);
+  transition: transform 0.3s;
+}
+
+.gallery-item:hover .gallery-overlay {
+  transform: translateY(0);
+}
+
+.gallery-overlay h3 {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+}
+
+.gallery-overlay p {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.empty-gallery {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-style: italic;
+  grid-column: 1 / -1;
+}
+</style>
+
+<!-- Ganti bagian gallery preview dengan ini -->
+<div class="gallery-container" id="galleryContainer">
+  <!-- Foto galeri akan dimuat di sini -->
+</div>
+
+<!-- Ganti script yang ada dengan ini -->
+<script>
+// Fungsi untuk memuat galeri dari localStorage
+function loadGaleri() {
+  try {
+    const galeri = JSON.parse(localStorage.getItem('galeri')) || [];
+    displayGaleri(galeri);
+  } catch (error) {
+    console.error('Error loading galeri:', error);
+  }
+}
+
+// Menampilkan galeri
+function displayGaleri(galeriList) {
+  const galleryContainer = document.getElementById('galleryContainer');
+  const comingSoon = document.querySelector('.coming-soon');
+  
+  if (galeriList.length > 0) {
+    // Sembunyikan pesan coming soon jika ada galeri
+    if (comingSoon) {
+      comingSoon.style.display = 'none';
     }
-
-    /* === Logo Styling === */
-    .logos {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-img {
-      height: 50px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #f0fdf4, #dcfce7);
-      color: #064e3b;
-      line-height: 1.6;
-    }
-
-    header {
-      background: #fff;
-      padding: 15px 50px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .logo-text {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #065f46;
-    }
-
-    nav {
-      display: flex;
-      gap: 25px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #065f46;
-      font-weight: 500;
-      transition: color 0.3s;
-      position: relative;
-    }
-
-    nav a:hover {
-      color: #10b981;
-    }
-
-    /* Highlight menu aktif */
-    nav a.active {
-      color: #10b981;
-      font-weight: 600;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: #10b981;
-      transition: width 0.3s;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    nav a.active::after {
-      width: 100%;
-    }
-
-    /* Hero Section */
-    .hero {
-      height: 50vh;
-      background: linear-gradient(rgba(62, 153, 70, 0.85), rgba(62, 153, 70, 0.85)), url("assets/hero.jpg") center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      padding: 0 20px;
-      position: relative;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .hero-content {
-      max-width: 800px;
-      z-index: 2;
-    }
-
-    .hero h1 {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      animation: fadeInDown 1s ease-in-out;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero p {
-      font-size: 1.4rem;
-      margin-bottom: 30px;
-      animation: fadeInUp 1.2s ease-in-out;
-      max-width: 700px;
-    }
-
-    /* Coming Soon Section */
-    .coming-soon {
-      text-align: center;
-      padding: 80px 20px;
-      background: white;
-      margin: 50px;
-      border-radius: 15px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-      animation: slideUp 0.8s ease-out;
-    }
-
-    .coming-soon-icon {
-      font-size: 5rem;
-      color: #3E9946;
-      margin-bottom: 30px;
-      animation: pulse 2s infinite;
-    }
-
-    .coming-soon h2 {
-      color: #3E9946;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-
-    .coming-soon p {
-      font-size: 1.2rem;
-      color: #065f46;
-      max-width: 600px;
-      margin: 0 auto 30px;
-    }
-
-    /* Gallery Preview */
-    .gallery-preview {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      margin: 40px 0;
-      padding: 0 20px;
-    }
-
-    .gallery-item {
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      height: 200px;
-      background: linear-gradient(45deg, #3E9946, #065f46);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 3rem;
-      opacity: 0.7;
-      transition: all 0.3s;
-    }
-
-    .gallery-item:hover {
-      opacity: 1;
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .gallery-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    /* Category Filter */
-    .gallery-categories {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 30px 0;
-      flex-wrap: wrap;
-    }
-
-    .category-btn {
-      padding: 10px 20px;
-      background: #f0fdf4;
-      border: 2px solid #3E9946;
-      border-radius: 25px;
-      color: #065f46;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .category-btn:hover, .category-btn.active {
-      background: #3E9946;
-      color: white;
-    }
-
-    /* Footer */
-    footer {
-      background: linear-gradient(to right, #3E9946, #065f46);
-      color: white;
-      text-align: center;
-      padding: 30px;
-      margin-top: 80px;
-    }
-
-    .social-icons {
-      margin-bottom: 20px;
-    }
-
-    .social-icons a {
-      color: white;
-      font-size: 1.5rem;
-      margin: 0 15px;
-      transition: color 0.3s;
-    }
-
-    .social-icons a:hover {
-      color: #dcfce7;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      header {
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .logos {
-        justify-content: center;
-      }
-
-      nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-      }
-
-      .hero {
-        height: 40vh;
-      }
-
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .hero p {
-        font-size: 1.1rem;
-      }
-
-      .coming-soon {
-        margin: 30px 15px;
-        padding: 40px 20px;
-      }
-
-      .coming-soon-icon {
-        font-size: 4rem;
-      }
-
-      .coming-soon h2 {
-        font-size: 2rem;
-      }
-
-      .gallery-preview {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-      }
-
-      .gallery-item {
-        height: 150px;
-        font-size: 2.5rem;
-      }
-
-      .gallery-categories {
-        gap: 10px;
-      }
-
-      .category-btn {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <header>
-    <div class="logo-container">
-      <div class="logos">
-        <img src="assets/logo.png" alt="Logo OSIS" class="logo-img">
-        <img src="assets/logo2.png" alt="Logo Sekolah" class="logo-img">
-        <img src="assets/logo3.png" alt="Logo MPK" class="logo-img">
-      </div>
-      <div class="logo-text">OSIS-MPK SMP ISLAM AL-IKHLAS</div>
-    </div>
-    <nav>
-      <a href="index.html">Beranda</a>
-      <a href="tentang.html">Tentang Kami</a>
-      <a href="program.html">Program</a>
-      <a href="galeri.html" class="active">Galeri</a>
-      <a href="kontak.html">Kontak</a>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Galeri Kegiatan</h1>
-      <p>Kumpulan momen berharga dari berbagai kegiatan OSIS & MPK SMP Islam Al Ikhlas</p>
-    </div>
-  </section>
-
-  <!-- Coming Soon Section -->
-  <section class="coming-soon">
-    <div class="coming-soon-icon">
-      <i class="fas fa-camera"></i>
-    </div>
-    <h2>Galeri Segera Hadir!</h2>
-    <p>Kami sedang mengumpulkan dan mengkurasi foto-foto terbaik dari berbagai kegiatan OSIS dan MPK. Nantikan momen-momen spesial yang akan kami bagikan!</p>
-  </section>
-
-  <!-- Gallery Categories -->
-  <div class="gallery-categories">
-    <button class="category-btn active">Semua</button>
-    <button class="category-btn">Kegiatan OSIS</button>
-    <button class="category-btn">Kegiatan MPK</button>
-    <button class="category-btn">Acara Sekolah</button>
-    <button class="category-btn">Ekstrakurikuler</button>
-  </div>
-
-  <!-- Gallery Preview -->
-  <div class="gallery-preview">
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-    <div class="gallery-item"><i class="fas fa-image"></i></div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-    </div>
-    <p>© 2025 OSIS & MPK SMP Islam Al Ikhlas. All rights reserved.</p>
-  </footer>
-
-  <script>
-    // Fungsi untuk kategori galeri (akan aktif ketika galeri sudah ada)
-    document.querySelectorAll('.category-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        document.querySelectorAll('.category-btn').forEach(btn => {
-          btn.classList.remove('active');
-        });
-        this.classList.add('active');
-      });
+    
+    galleryContainer.innerHTML = '';
+    
+    galeriList.forEach(item => {
+      const galleryItem = `
+        <div class="gallery-item" data-category="${item.kategori}">
+          <img src="${item.gambar}" alt="${item.judul}">
+          <div class="gallery-overlay">
+            <h3>${item.judul}</h3>
+            <p>${item.deskripsi}</p>
+          </div>
+        </div>
+      `;
+      galleryContainer.innerHTML += galleryItem;
     });
-  </script>
-</body>
-</html>
+  } else {
+    // Tampilkan pesan jika tidak ada galeri
+    galleryContainer.innerHTML = `
+      <div class="empty-gallery">
+        <i class="fas fa-camera" style="font-size: 3rem; margin-bottom: 15px;"></i>
+        <h3>Galeri Masih Kosong</h3>
+        <p>Belum ada foto yang ditambahkan ke galeri. Silakan check back later!</p>
+      </div>
+    `;
+  }
+}
+
+// Jalankan saat halaman dimuat
+document.addEventListener('DOMContentLoaded', loadGaleri);
+</script>
