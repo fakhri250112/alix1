@@ -18,6 +18,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
 
     .logo-img {
@@ -204,6 +205,7 @@
       text-align: center;
       padding: 30px;
       margin-top: 80px;
+      position: relative;
     }
 
     .social-icons {
@@ -219,6 +221,209 @@
 
     .social-icons a:hover {
       color: #dcfce7;
+    }
+
+    /* Tombol Admin di Footer */
+    .admin-access {
+      margin-top: 20px;
+    }
+
+    .admin-btn {
+      background: #ff9800;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .admin-btn:hover {
+      background: #f57c00;
+    }
+
+    /* Modal Admin */
+    .admin-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .admin-modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .admin-modal h3 {
+      color: #3E9946;
+      margin-bottom: 20px;
+    }
+
+    .admin-modal input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .admin-modal button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .admin-login-btn {
+      background: #3E9946;
+      color: white;
+    }
+
+    .admin-cancel-btn {
+      background: #dc3545;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .admin-error {
+      color: red;
+      margin-top: 15px;
+      display: none;
+    }
+
+    /* Panel Admin */
+    .admin-panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      z-index: 10000;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .admin-panel-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .admin-header h2 {
+      color: #3E9946;
+    }
+
+    .admin-logout-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .admin-section {
+      background: #f0fdf4;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid #3E9946;
+    }
+
+    .admin-section h3 {
+      color: #065f46;
+      margin-bottom: 15px;
+    }
+
+    .admin-section input,
+    .admin-section textarea,
+    .admin-section select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .admin-section textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    .admin-section button {
+      background: #3E9946;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .admin-list {
+      margin-top: 20px;
+    }
+
+    .admin-item {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 3px solid #3E9946;
+    }
+
+    .admin-item h4 {
+      color: #065f46;
+      margin-bottom: 5px;
+    }
+
+    .admin-item p {
+      color: #047857;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    .admin-item .countdown {
+      font-size: 0.8rem;
+      padding: 3px 8px;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-top: 5px;
     }
 
     /* Animations */
@@ -287,6 +492,14 @@
         flex-direction: column;
         align-items: center;
       }
+
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-panel {
+        padding: 15px;
+      }
     }
   </style>
 </head>
@@ -294,7 +507,7 @@
   <!-- Header -->
   <header>
     <div class="logo-container">
-      <div class="logos">
+      <div class="logos" id="adminShortcut">
         <img src="assets/logo.png" alt="Logo OSIS" class="logo-img">
         <img src="assets/logo2.png" alt="Logo Sekolah" class="logo-img">
         <img src="assets/logo3.png" alt="Logo MPK" class="logo-img">
@@ -332,15 +545,127 @@
       <a href="#"><i class="fab fa-twitter"></i></a>
     </div>
     <p>© 2025 OSIS & MPK SMP Islam Al Ikhlas. All rights reserved.</p>
+    
+    <!-- Tombol Admin di Footer -->
+    <div class="admin-access" id="adminAccess" style="display: none;">
+      <button class="admin-btn" onclick="showAdminModal()">
+        <i class="fas fa-cog"></i> Admin Access
+      </button>
+    </div>
   </footer>
 
+  <!-- Modal Login Admin -->
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-modal-content">
+      <h3><i class="fas fa-lock"></i> Admin Login</h3>
+      <input type="password" id="adminPassword" placeholder="Masukkan password admin">
+      <button class="admin-login-btn" onclick="loginAdmin()">Masuk</button>
+      <button class="admin-cancel-btn" onclick="hideAdminModal()">Batal</button>
+      <p class="admin-error" id="adminLoginError">Password salah!</p>
+    </div>
+  </div>
+
+  <!-- Panel Admin -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-panel-content">
+      <div class="admin-header">
+        <h2>Panel Admin OSIS MPK</h2>
+        <button class="admin-logout-btn" onclick="logoutAdmin()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+      
+      <div class="admin-grid">
+        <div class="admin-section">
+          <h3>Tambah Program Kerja</h3>
+          <input type="text" id="prokerJudul" placeholder="Judul Program">
+          <textarea id="prokerDeskripsi" placeholder="Deskripsi"></textarea>
+          <input type="datetime-local" id="prokerTanggal">
+          <input type="text" id="prokerIcon" placeholder="Icon (contoh: fas fa-book)">
+          <button onclick="tambahProker()">Tambah Program</button>
+        </div>
+        
+        <div class="admin-section">
+          <h3>Tambah Galeri</h3>
+          <input type="text" id="galeriJudul" placeholder="Judul Foto">
+          <textarea id="galeriDeskripsi" placeholder="Deskripsi"></textarea>
+          <select id="galeriKategori">
+            <option value="osis">OSIS</option>
+            <option value="mpk">MPK</option>
+            <option value="sekolah">Sekolah</option>
+          </select>
+          <input type="file" id="galeriFoto" accept="image/*">
+          <button onclick="tambahGaleri()">Tambah ke Galeri</button>
+        </div>
+      </div>
+      
+      <div class="admin-grid">
+        <div class="admin-section">
+          <h3>Daftar Program Kerja</h3>
+          <div class="admin-list" id="adminProkerList"></div>
+        </div>
+        
+        <div class="admin-section">
+          <h3>Daftar Galeri</h3>
+          <div class="admin-list" id="adminGaleriList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Fungsi untuk memuat proker dari localStorage
+    // ==================== KONFIGURASI ====================
+    const ADMIN_PASSWORD = "osis2024"; // Ganti dengan password yang lebih kuat
+    let clickCount = 0;
+    let isLoggedIn = false;
+
+    // ==================== FUNGSI UMUM ====================
+    function showAdminModal() {
+      document.getElementById('adminModal').style.display = 'flex';
+    }
+
+    function hideAdminModal() {
+      document.getElementById('adminModal').style.display = 'none';
+      document.getElementById('adminPassword').value = '';
+      document.getElementById('adminLoginError').style.display = 'none';
+    }
+
+    function loginAdmin() {
+      const password = document.getElementById('adminPassword').value;
+      if (password === ADMIN_PASSWORD) {
+        isLoggedIn = true;
+        hideAdminModal();
+        document.getElementById('adminPanel').style.display = 'block';
+        loadAdminData();
+      } else {
+        document.getElementById('adminLoginError').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('adminLoginError').style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    function logoutAdmin() {
+      isLoggedIn = false;
+      document.getElementById('adminPanel').style.display = 'none';
+    }
+
+    function checkAdminAccess() {
+      clickCount++;
+      if (clickCount >= 5) {
+        document.getElementById('adminAccess').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('adminAccess').style.display = 'none';
+        }, 5000);
+        clickCount = 0;
+      }
+    }
+
+    // ==================== FUNGSI PROKER ====================
     function loadProker() {
       try {
         const prokers = JSON.parse(localStorage.getItem('prokers')) || [];
         
-        // Jika tidak ada data, gunakan data default
         if (prokers.length === 0) {
           displayDefaultProker();
           return;
@@ -353,7 +678,6 @@
       }
     }
 
-    // Menampilkan proker default jika tidak ada data
     function displayDefaultProker() {
       const prokerContainer = document.getElementById('prokerContainer');
       prokerContainer.innerHTML = `
@@ -378,12 +702,10 @@
       `;
     }
 
-    // Menampilkan proker dengan countdown
     function displayProker(prokerList) {
       const prokerContainer = document.getElementById('prokerContainer');
       prokerContainer.innerHTML = '';
       
-      // Filter hanya proker yang statusnya active
       const activeProkers = prokerList.filter(proker => proker.status === 'active');
       
       if (activeProkers.length === 0) {
@@ -423,8 +745,202 @@
       });
     }
 
-    // Jalankan saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', loadProker);
+    function tambahProker() {
+      const judul = document.getElementById('prokerJudul').value;
+      const deskripsi = document.getElementById('prokerDeskripsi').value;
+      const tanggal = document.getElementById('prokerTanggal').value;
+      const icon = document.getElementById('prokerIcon').value;
+      
+      if (!judul || !deskripsi || !tanggal || !icon) {
+        alert('Semua field harus diisi!');
+        return;
+      }
+      
+      const prokers = JSON.parse(localStorage.getItem('prokers')) || [];
+      const newProker = {
+        id: Date.now(),
+        judul,
+        deskripsi,
+        tanggal,
+        icon,
+        status: 'active'
+      };
+      
+      prokers.push(newProker);
+      localStorage.setItem('prokers', JSON.stringify(prokers));
+      
+      // Reset form
+      document.getElementById('prokerJudul').value = '';
+      document.getElementById('prokerDeskripsi').value = '';
+      document.getElementById('prokerTanggal').value = '';
+      document.getElementById('prokerIcon').value = '';
+      
+      // Reload data
+      loadProker();
+      loadAdminData();
+      
+      alert('Program kerja berhasil ditambahkan!');
+    }
+
+    function hapusProker(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus program kerja ini?')) {
+        let prokers = JSON.parse(localStorage.getItem('prokers')) || [];
+        prokers = prokers.filter(proker => proker.id !== id);
+        localStorage.setItem('prokers', JSON.stringify(prokers));
+        
+        loadProker();
+        loadAdminData();
+        alert('Program kerja berhasil dihapus!');
+      }
+    }
+
+    // ==================== FUNGSI GALERI ====================
+    function tambahGaleri() {
+      const judul = document.getElementById('galeriJudul').value;
+      const deskripsi = document.getElementById('galeriDeskripsi').value;
+      const kategori = document.getElementById('galeriKategori').value;
+      const fileInput = document.getElementById('galeriFoto');
+      
+      if (!judul || !deskripsi || !fileInput.files[0]) {
+        alert('Judul, deskripsi, dan foto harus diisi!');
+        return;
+      }
+      
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const galeri = JSON.parse(localStorage.getItem('galeri')) || [];
+        const newGaleri = {
+          id: Date.now(),
+          judul,
+          deskripsi,
+          kategori,
+          gambar: e.target.result,
+          tanggal: new Date().toISOString()
+        };
+        
+        galeri.push(newGaleri);
+        localStorage.setItem('galeri', JSON.stringify(galeri));
+        
+        // Reset form
+        document.getElementById('galeriJudul').value = '';
+        document.getElementById('galeriDeskripsi').value = '';
+        document.getElementById('galeriFoto').value = '';
+        
+        // Reload data
+        loadAdminData();
+        alert('Foto berhasil ditambahkan ke galeri!');
+      };
+      
+      reader.readAsDataURL(file);
+    }
+
+    function hapusGaleri(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus foto ini dari galeri?')) {
+        let galeri = JSON.parse(localStorage.getItem('galeri')) || [];
+        galeri = galeri.filter(item => item.id !== id);
+        localStorage.setItem('galeri', JSON.stringify(galeri));
+        
+        loadAdminData();
+        alert('Foto berhasil dihapus dari galeri!');
+      }
+    }
+
+    // ==================== FUNGSI ADMIN ====================
+    function loadAdminData() {
+      if (!isLoggedIn) return;
+      
+      // Load proker untuk admin
+      const prokers = JSON.parse(localStorage.getItem('prokers')) || [];
+      const prokerList = document.getElementById('adminProkerList');
+      prokerList.innerHTML = '';
+      
+      if (prokers.length === 0) {
+        prokerList.innerHTML = '<p>Belum ada program kerja.</p>';
+      } else {
+        prokers.forEach(proker => {
+          const tanggal = new Date(proker.tanggal);
+          const now = new Date();
+          const diffTime = tanggal - now;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          
+          let countdownText = '';
+          let countdownClass = '';
+          
+          if (diffDays > 0) {
+            countdownText = `${diffDays} hari lagi`;
+            countdownClass = 'countdown-upcoming';
+          } else if (diffDays === 0) {
+            countdownText = 'Hari ini!';
+            countdownClass = 'countdown-today';
+          } else {
+            countdownText = 'Sudah terlaksana';
+            countdownClass = 'countdown-past';
+          }
+          
+          const prokerItem = document.createElement('div');
+          prokerItem.className = 'admin-item';
+          prokerItem.innerHTML = `
+            <h4>${proker.judul}</h4>
+            <p>${proker.deskripsi}</p>
+            <div class="countdown ${countdownClass}">${countdownText}</div>
+            <button class="delete-btn" onclick="hapusProker(${proker.id})">Hapus</button>
+          `;
+          prokerList.appendChild(prokerItem);
+        });
+      }
+      
+      // Load galeri untuk admin
+      const galeri = JSON.parse(localStorage.getItem('galeri')) || [];
+      const galeriList = document.getElementById('adminGaleriList');
+      galeriList.innerHTML = '';
+      
+      if (galeri.length === 0) {
+        galeriList.innerHTML = '<p>Belum ada foto di galeri.</p>';
+      } else {
+        galeri.forEach(item => {
+          const tanggal = new Date(item.tanggal);
+          const galeriItem = document.createElement('div');
+          galeriItem.className = 'admin-item';
+          galeriItem.innerHTML = `
+            <h4>${item.judul} (${item.kategori})</h4>
+            <p>${item.deskripsi}</p>
+            <img src="${item.gambar}" alt="${item.judul}" style="max-width: 100px; border-radius: 5px; margin-top: 5px;">
+            <button class="delete-btn" onclick="hapusGaleri(${item.id})">Hapus</button>
+          `;
+          galeriList.appendChild(galeriItem);
+        });
+      }
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load data proker untuk website
+      loadProker();
+      
+      // Klik logo 5 kali untuk unlock admin access
+      document.getElementById('adminShortcut').addEventListener('click', checkAdminAccess);
+      
+      // Keyboard shortcut: Ctrl+Alt+A untuk admin access
+      document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.altKey && e.key === 'a') {
+          document.getElementById('adminAccess').style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('adminAccess').style.display = 'none';
+          }, 5000);
+        }
+      });
+      
+      // Cek parameter URL untuk admin access
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('admin') === '1') {
+        document.getElementById('adminAccess').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('adminAccess').style.display = 'none';
+        }, 5000);
+      }
+    });
   </script>
 </body>
 </html>
